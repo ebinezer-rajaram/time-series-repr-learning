@@ -1,0 +1,28 @@
+# Core ML & Numerical Libraries
+torch>=2.7.1 
+numpy>=1.24
+pandas>=2.0
+scipy>=1.10
+scikit-learn>=1.3
+statsmodels>=0.14  # ARIMA, etc.
+
+# Visualization & Plotting
+matplotlib>=3.7
+seaborn>=0.12
+plotly>=5.17  # interactive plots, optional
+umap-learn>=0.5  # for embedding visualization (optional)
+
+# Experiment Tracking & Logging
+tqdm>=4.65         # progress bars
+tensorboard>=2.14  # logs & visualisation
+wandb>=0.16        # for cloud experiment tracking
+
+# Configuration & Utilities
+pyyaml>=6.0   # if you use YAML configs
+
+# Testing 
+pytest>=7.3
+
+
+
+
