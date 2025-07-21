@@ -19,7 +19,6 @@ def get_dataloader(config, split, transforms=None):
     if dataset_name == 'synthetic':
         kwargs['params'] = config['data'].get('params', {})
     else:
-        # automatically point to processed split
         suffix = f"{split}.csv"
         kwargs['csv_path'] = f"data/processed/{dataset_name}_{suffix}"
 

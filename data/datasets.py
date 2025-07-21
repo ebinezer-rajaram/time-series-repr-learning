@@ -48,7 +48,6 @@ class MarketDataset(BaseTimeSeriesDataset):
 
         df = pd.read_csv(csv_path, index_col=0, parse_dates=True)
 
-        # Data is already preprocessed & clean
         data = df.values
 
         data = self.train_val_test_split(data)
