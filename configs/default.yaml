@@ -39,6 +39,7 @@ objective:
   # Parameters for contrastive:
   jitter_std: 0.02            # noise level for jitter in contrastive augmentation
   scaling_std: 0.1            # noise level for scaling in contrastive augmentation
+  temperature: 0.15           # softmax temperature for contrastive loss
 
 
 logging:
