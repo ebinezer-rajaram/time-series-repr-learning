@@ -31,8 +31,15 @@ training:
   patience: 5                 # number of epochs to wait before early stopping
 
 objective:
-  type: "forecasting"         # task type: forecasting, contrastive, masking, etc.
-  loss_fn: "mse"              # loss function: mse, cross_entropy, contrastive_loss, masked etc.
+  type: "forecasting"         # pretraining task: forecasting, masking, contrastive
+  # Parameters for forecasting:
+  pred_len: 24                # forecast horizon (overrides data.pred_len if needed)
+  # Parameters for masking:
+  mask_ratio: 0.15            # fraction of elements to mask in masking objective
+  # Parameters for contrastive:
+  jitter_std: 0.02            # noise level for jitter in contrastive augmentation
+  scaling_std: 0.1            # noise level for scaling in contrastive augmentation
+
 
 logging:
   log_dir: "runs/"            # directory where logs & checkpoints are saved
