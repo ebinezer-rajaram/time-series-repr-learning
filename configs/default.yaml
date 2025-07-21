@@ -1,0 +1,40 @@
+# ======================================
+# Default experiment configuration
+# ======================================
+
+data:
+  dataset: "spy"            # which dataset to use: spy, etth1, ohlcv, ecg, synthetic, etc.
+  seq_len: 96                 # input sequence length (timesteps)
+  pred_len: 24                # prediction horizon (timesteps) for forecasting tasks
+  batch_size: 64              # number of samples per batch
+  train_split: 0.7            # proportion of data for training
+  val_split: 0.15             # proportion of data for validation
+  test_split: 0.15            # proportion of data for testing
+  normalize: true             # whether to normalize data based on train set statistics
+
+model:
+  name: "transformer"         # which backbone model: transformer, lstm, cnn, vae, customtransformer
+  input_dim: 7                # number of input features per timestep
+  model_dim: 64               # hidden dimension size (used in transformer)
+  hidden_dim: 64              # hidden dimension for LSTM/CNN baselines
+  num_layers: 2               # number of layers (e.g., transformer encoder layers, LSTM layers)
+  num_heads: 4                # number of attention heads (transformer only)
+  dim_feedforward: 128        # FFN hidden dimension inside transformer encoder
+  dropout: 0.1                # dropout probability (applied to layers where applicable)
+
+training:
+  epochs: 50                  # total number of training epochs
+  learning_rate: 0.001        # initial learning rate for optimizer
+  optimizer: "adamw"           # optimizer to use: adam, adamw, etc.
+  weight_decay: 0.0001        # L2 regularization weight decay
+  early_stopping: true        # whether to stop early if validation doesn’t improve
+  patience: 5                 # number of epochs to wait before early stopping
+
+objective:
+  type: "forecasting"         # task type: forecasting, contrastive, masking, etc.
+  loss_fn: "mse"              # loss function: mse, cross_entropy, contrastive_loss, masked etc.
+
+logging:
+  log_dir: "runs/"            # directory where logs & checkpoints are saved
+  use_wandb: false            # whether to log to Weights & Biases
+  wandb_project: "time-series-repr"  # W&B project name (if enabled)
