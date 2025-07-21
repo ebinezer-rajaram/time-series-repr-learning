@@ -10,8 +10,8 @@ def get_dataloader(config, split, transforms=None):
         raise ValueError(f"Dataset {dataset_name} not implemented.")
 
     kwargs = dict(
-        window_size=config['data']['window_size'],
-        horizon=config['data']['horizon'],
+        window_size=config['data']['seq_len'],
+        horizon=config['data']['pred_len'],
         split=split,
         transforms=transforms,
     )
@@ -19,13 +19,15 @@ def get_dataloader(config, split, transforms=None):
     if dataset_name == 'synthetic':
         kwargs['params'] = config['data'].get('params', {})
     else:
-        kwargs['csv_path'] = config['data']['csv_path']
+        # automatically point to processed split
+        suffix = f"{split}.csv"
+        kwargs['csv_path'] = f"data/processed/{dataset_name}_{suffix}"
 
     dataset = dataset_cls(**kwargs)
 
     loader = DataLoader(
         dataset,
-        batch_size=config['training']['batch_size'],
+        batch_size=config['data']['batch_size'],  # prefer batch_size from 'data' section
         shuffle=(split == 'train'),
         num_workers=4,
         pin_memory=True
