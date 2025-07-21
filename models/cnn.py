@@ -1,21 +1,35 @@
 import torch.nn as nn
 
 class CNNEncoder(nn.Module):
-    def __init__(self, config):
+    """
+    1D CNN encoder for time series.
+    """
+    def __init__(
+        self,
+        input_dim: int,
+        hidden_dim: int = 64,
+        num_layers: int = 3,
+        kernel_size: int = 3,
+        **kwargs
+    ):
         super().__init__()
-        input_dim = config["model"].get("input_dim", None)  # may need to set
-        channels = 64
-        kernel_size = 3
-        self.net = nn.Sequential(
-            nn.Conv1d(in_channels=input_dim, out_channels=channels, kernel_size=kernel_size, padding=1),
-            nn.ReLU(),
-            nn.Conv1d(in_channels=channels, out_channels=channels, kernel_size=kernel_size, padding=1),
-            nn.ReLU(),
-            nn.AdaptiveAvgPool1d(1),  
-        )
+        layers = []
+        for _ in range(num_layers):
+            layers.append(
+                nn.Conv1d(
+                    input_dim,
+                    hidden_dim,
+                    kernel_size=kernel_size,
+                    padding=kernel_size // 2,
+                )
+            )
+            layers.append(nn.ReLU())
+            input_dim = hidden_dim
+        self.net = nn.Sequential(*layers)
 
     def forward(self, x):
-        x = x.transpose(1, 2)
+        # x: (batch, seq_len, input_dim) → (batch, input_dim, seq_len)
+        x = x.permute(0, 2, 1)
         x = self.net(x)
-        x = x.squeeze(-1)  # remove pooled dim
-        return x
+        x = x.permute(0, 2, 1)
+        return x  # (batch, seq_len, hidden_dim)

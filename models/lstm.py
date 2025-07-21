@@ -1,25 +1,28 @@
 import torch.nn as nn
 
 class LSTMEncoder(nn.Module):
-    def __init__(self, config):
+    """
+    Bidirectional LSTM encoder for time series.
+    """
+    def __init__(
+        self,
+        input_dim: int,
+        hidden_dim: int = 64,
+        num_layers: int = 2,
+        dropout: float = 0.1,
+        **kwargs
+    ):
         super().__init__()
-        input_dim = config["model"].get("input_dim", None)  # you may need to infer this
-        hidden_size = config["model"].get("hidden_size", 64)
-        num_layers = config["model"].get("num_layers", 2)
-        dropout = config["model"]["dropout"]
-
         self.lstm = nn.LSTM(
-            input_size=input_dim,
-            hidden_size=hidden_size,
+            input_dim,
+            hidden_dim,
             num_layers=num_layers,
             batch_first=True,
-            dropout=dropout
+            dropout=dropout,
+            bidirectional=True,
         )
 
     def forward(self, x):
-        # x: [B, T, F]
-        output, _ = self.lstm(x)
-        emb = output.mean(dim=1)  # [B, hidden_size]
-            
-        return emb
-        
+        # x: (batch, seq_len, input_dim)
+        output, (hn, cn) = self.lstm(x)
+        return output  # (batch, seq_len, hidden_dim*2 if bidirectional)
