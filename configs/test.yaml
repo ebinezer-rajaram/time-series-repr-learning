@@ -1,0 +1,40 @@
+data:
+  dataset: "spy"              # use small CSVs you already have
+  seq_len: 16                 # short sequences
+  pred_len: 4
+  batch_size: 8               # very small batch
+  train_split: 0.7
+  val_split: 0.15
+  test_split: 0.15
+  normalize: false            # skip normalisation for speed
+
+model:
+  name: "transformer"         # you can also test cnn or lstm here
+  input_dim: 5
+  model_dim: 16               # small hidden size
+  hidden_dim: 16
+  num_layers: 1
+  num_heads: 2
+  dim_feedforward: 32
+  dropout: 0.1
+
+training:
+  epochs: 2                   # super quick
+  learning_rate: 0.001
+  optimizer: "adamw"
+  weight_decay: 0.0
+  early_stopping: false
+  patience: 2
+
+objective:
+  type: "forecasting"
+  pred_len: 4
+  mask_ratio: 0.1
+  jitter_std: 0.01
+  scaling_std: 0.05
+  temperature: 0.2
+
+logging:
+  log_dir: "runs/"
+  use_wandb: false
+  wandb_project: "time-series-repr"

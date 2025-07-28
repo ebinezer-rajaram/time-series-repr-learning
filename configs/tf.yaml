@@ -6,7 +6,7 @@ data:
   dataset: "spy"            # which dataset to use: spy, etth1, ohlcv, ecg, synthetic, etc.
   seq_len: 96                 # input sequence length (timesteps)
   pred_len: 24                # prediction horizon (timesteps) for forecasting tasks
-  batch_size: 128             # number of samples per batch
+  batch_size: 64             # number of samples per batch
   train_split: 0.7            # proportion of data for training
   val_split: 0.15             # proportion of data for validation
   test_split: 0.15            # proportion of data for testing
@@ -15,20 +15,20 @@ data:
 model:
   name: "transformer"         # which backbone model: transformer, lstm, cnn, vae, customtransformer
   input_dim: 5                # number of input features per timestep
-  model_dim: 64               # hidden dimension size (used in transformer)
-  hidden_dim: 64              # hidden dimension for LSTM/CNN baselines
+  model_dim: 32              # hidden dimension size (used in transformer)
+  hidden_dim: 32             # hidden dimension for LSTM/CNN baselines
   num_layers: 2               # number of layers (e.g., transformer encoder layers, LSTM layers)
-  num_heads: 4                # number of attention heads (transformer only)
-  dim_feedforward: 128        # FFN hidden dimension inside transformer encoder
-  dropout: 0.1                # dropout probability (applied to layers where applicable)
+  num_heads: 2                # number of attention heads (transformer only)
+  dim_feedforward: 64       # FFN hidden dimension inside transformer encoder
+  dropout: 0.2                # dropout probability (applied to layers where applicable)
 
 training:
-  epochs: 25                 # total number of training epochs
-  learning_rate: 0.002        # initial learning rate for optimizer
+  epochs: 50                 # total number of training epochs
+  learning_rate: 0.0005        # initial learning rate for optimizer
   optimizer: "adamw"           # optimizer to use: adam, adamw, etc.
-  weight_decay: 0.0001        # L2 regularization weight decay
+  weight_decay: 0.001        # L2 regularization weight decay
   early_stopping: true        # whether to stop early if validation doesn’t improve
-  patience: 5                 # number of epochs to wait before early stopping
+  patience: 7                 # number of epochs to wait before early stopping
 
 objective:
   type: "forecasting"         # pretraining task: forecasting, masking, contrastive
