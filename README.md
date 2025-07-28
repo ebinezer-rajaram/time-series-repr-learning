@@ -1,6 +1,46 @@
-# time-series-repr-learning
-Self-supervised Transformers for Multivariate Time Series Representation Learning
+# 🧠 Temporal Representation Learning
 
+**Self-Supervised Transformers for Generalizable Time Series Embeddings**
+
+This project explores self-supervised learning for multivariate time series using transformer-based architectures. The goal is to learn robust, task-agnostic temporal representations that transfer effectively to diverse downstream tasks — including forecasting, anomaly detection, and regime classification.
+
+We design and evaluate a suite of transformer models trained with contrastive and masking-based objectives on real-world datasets. Our focus is on benchmarking the learned embeddings across tasks, datasets, and generalization conditions to understand how temporal structure is captured in self-supervised regimes.
+
+---
+
+## ✨ Key Features
+
+- **Transformer Encoders for Time Series**  
+  Custom architectures adapted for multivariate sequences with temporal masking, positional priors, and flexible input lengths.
+
+- **Self-Supervised Objectives**  
+  Implementations of contrastive learning, masked reconstruction, and hybrid objectives tailored for time series data.
+
+- **Unified Evaluation Suite**  
+  Downstream tasks include:
+  - Time series forecasting
+  - Anomaly detection
+  - Market regime classification
+
+- **Comprehensive Benchmarks**  
+  Compare transformer embeddings to LSTM, CNN, and variational baselines under various data regimes.
+
+- **Generalisation & Robustness Analysis**  
+  Probing with CKA, t-SNE, distributional shift testing, and performance under drift and noise.
+
+---
+
+## 🧩 Motivation
+
+Time series data is ubiquitous but challenging: variable length, noise, and limited supervision make learning general representations non-trivial. Inspired by progress in NLP and vision, this project brings state-of-the-art self-supervised techniques to time series with a focus on:
+
+- Architectural efficiency and inductive bias
+- Embedding quality across tasks and domains
+- Modular, research-friendly design
+
+---
+
+# Usage and Instructions
 
 ## 🧪 Pretraining (Self-Supervised)
 
